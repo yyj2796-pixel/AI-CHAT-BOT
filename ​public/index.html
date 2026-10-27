@@ -416,6 +416,11 @@
                     body: JSON.stringify({ messages: messages })
                 });
 
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    throw new Error("서버 응답 형식이 올바르지 않습니다.");
+                }
+
                 const data = await response.json();
 
                 if (data.error) {
